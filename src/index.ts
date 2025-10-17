@@ -5,8 +5,16 @@ import path from 'node:path'
 import process from 'node:process'
 import { createUnplugin } from 'unplugin'
 
+function resolveServeDir(serveDir: string): string {
+  if (path.isAbsolute(serveDir)) {
+    return serveDir
+  }
+
+  return path.resolve(process.cwd(), serveDir)
+}
+
 export const unpluginFactory: UnpluginFactory<Options | undefined> = (options) => {
-  const serveDir = options?.serveDir || 'node_modules'
+  const serveDir = resolveServeDir(options?.serveDir || 'node_modules')
 
   return {
     name: 'unplugin-mp-verify-file-serve',
@@ -18,7 +26,6 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (options) =
             && req.originalUrl.endsWith('.txt')
           ) {
             const filePath = path.join(
-              process.cwd(),
               serveDir,
               req.originalUrl,
             )
@@ -53,7 +60,6 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (options) =
             && req.url.endsWith('.txt')
           ) {
             const filePath = path.join(
-              process.cwd(),
               serveDir,
               req.url,
             )
