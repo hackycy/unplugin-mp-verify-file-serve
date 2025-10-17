@@ -2,10 +2,19 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "nodemon -w '../src/**/*.ts' -e .ts -x vite"
+    "dev": "nodemon -w '../src/**/*.ts' -e .ts -x vite",
+    "dev:vite": "nodemon -w '../src/**/*.ts' -e .ts -x vite",
+    "dev:webpack": "nodemon -w '../src/**/*.ts' -e .ts -x 'pnpm build:plugin && webpack serve --mode development --config webpack.config.cjs'",
+    "build:plugin": "cd .. && pnpm build"
   },
   "devDependencies": {
+    "html-webpack-plugin": "^5.6.3",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.8.3",
     "vite": "^6.3.5",
-    "vite-plugin-inspect": "^11.1.0"
+    "vite-plugin-inspect": "^11.1.0",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.2.0"
   }
 }

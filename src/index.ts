@@ -39,8 +39,67 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (options) =
         })
       },
     },
-    webpack(_compiler) {
-      // TODO
+    webpack(compiler) {
+      compiler.hooks.beforeRun.tap('unplugin-mp-verify-file-serve', () => {
+        // Webpack production build mode - no dev server
+      })
+
+      // Setup devServer middleware for development mode
+      if (compiler.options.devServer) {
+        // Middleware handler function
+        const middlewareHandler = (req: any, res: any, next: any): void => {
+          if (
+            req.url?.startsWith('/MP_')
+            && req.url.endsWith('.txt')
+          ) {
+            const filePath = path.join(
+              process.cwd(),
+              serveDir,
+              req.url,
+            )
+            readFile(filePath, 'utf-8', (err, data) => {
+              if (err) {
+                res.statusCode = 500
+                res.end('Internal Server Error')
+              }
+              else {
+                res.setHeader('Content-Type', 'text/plain')
+                res.end(data)
+              }
+            })
+          }
+          else {
+            next()
+          }
+        }
+
+        // Webpack 5: setupMiddlewares API
+        if (compiler.options.devServer.setupMiddlewares !== undefined) {
+          const setupMiddlewares = compiler.options.devServer.setupMiddlewares
+
+          compiler.options.devServer.setupMiddlewares = (middlewares: any, devServer: any) => {
+            if (!devServer) {
+              throw new Error('webpack-dev-server is not defined')
+            }
+
+            devServer.app?.use(middlewareHandler)
+
+            return setupMiddlewares ? setupMiddlewares(middlewares, devServer) : middlewares
+          }
+        }
+        // Webpack 4: before hook
+        else {
+          const originalBefore = compiler.options.devServer.before
+
+          compiler.options.devServer.before = (app: any, server: any, compiler: any) => {
+            app.use(middlewareHandler)
+
+            if (originalBefore) {
+              originalBefore(app, server, compiler)
+            }
+          }
+        }
+      }
     },
   }
 }
