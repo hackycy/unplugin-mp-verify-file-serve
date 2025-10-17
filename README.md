@@ -29,22 +29,6 @@ Example: [`playground/`](./playground/)
 <br></details>
 
 <details>
-<summary>Rollup</summary><br>
-
-```ts
-// rollup.config.js
-import MPVerifyFileServe from 'unplugin-mp-verify-file-serve/rollup'
-
-export default {
-  plugins: [
-    MPVerifyFileServe({ /* options */ }),
-  ],
-}
-```
-
-<br></details>
-
-<details>
 <summary>Webpack</summary><br>
 
 ```ts
@@ -87,21 +71,6 @@ module.exports = {
     ],
   },
 }
-```
-
-<br></details>
-
-<details>
-<summary>esbuild</summary><br>
-
-```ts
-// esbuild.config.js
-import { build } from 'esbuild'
-import MPVerifyFileServe from 'unplugin-mp-verify-file-serve/esbuild'
-
-build({
-  plugins: [MPVerifyFileServe()],
-})
 ```
 
 <br></details>
