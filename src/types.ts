@@ -1,3 +1,7 @@
 export interface Options {
-  // define your plugin options here
+  /**
+   * 微信小程序验证文件服务存放目录
+   * @default 'node_modules/.mp'
+   */
+  serveDir?: string
 }
