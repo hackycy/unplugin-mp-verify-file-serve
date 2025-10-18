@@ -23,9 +23,6 @@ export default defineConfig({
   ],
 })
 ```
-
-Example: [`playground/`](./playground/)
-
 <br></details>
 
 <details>
@@ -40,7 +37,6 @@ module.exports = {
   ]
 }
 ```
-
 <br></details>
 
 <details>
@@ -54,9 +50,6 @@ export default defineNuxtConfig({
   ],
 })
 ```
-
-> This module works for both Nuxt 2 and [Nuxt Vite](https://github.com/nuxt/vite)
-
 <br></details>
 
 <details>
@@ -72,5 +65,4 @@ module.exports = {
   },
 }
 ```
-
 <br></details>

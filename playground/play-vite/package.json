@@ -2,7 +2,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "nodemon -w '../src/**/*.ts' -e .ts -x vite"
+    "dev": "nodemon -w '../../src/**/*.ts' -e .ts -x vite"
   },
   "devDependencies": {
     "vite": "^6.3.5",
