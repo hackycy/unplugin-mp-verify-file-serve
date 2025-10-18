@@ -79,8 +79,11 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (options) =
           }
         }
 
+        // 获取WebPack版本
+        const webpackVersion = Number.parseInt(compiler.webpack.version.split('.')[0])
+
         // Webpack 5: setupMiddlewares API
-        if (compiler.options.devServer.setupMiddlewares !== undefined) {
+        if (webpackVersion >= 5) {
           const setupMiddlewares = compiler.options.devServer.setupMiddlewares
 
           compiler.options.devServer.setupMiddlewares = (middlewares: any, devServer: any) => {
