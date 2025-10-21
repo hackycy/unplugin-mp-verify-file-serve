@@ -2,12 +2,27 @@
 
 [![NPM version](https://img.shields.io/npm/v/unplugin-mp-verify-file-serve?color=a1b858&label=)](https://www.npmjs.com/package/unplugin-mp-verify-file-serve)
 
-在开发环境下进行微信开放平台的服务器域名校验文件访问，配合内网穿透在开发阶段进行公众号网页调试等
+在开发环境中提供微信开放平台服务器域名校验文件的访问，配合内网穿透可方便地进行公众号网页调试。
+
+> 仅在开发模式（本地调试）下生效
 
 ## Install
 
 ```bash
 npm i unplugin-mp-verify-file-serve
+```
+
+**Options**
+
+``` ts
+export interface Options {
+  /**
+   * 微信小程序验证文件服务存放目录
+   *
+   * @default 'node_modules'
+   */
+  serveDir?: string
+}
 ```
 
 <details>
@@ -66,3 +81,8 @@ module.exports = {
 }
 ```
 <br></details>
+
+## Example
+
+- [vite](./playground/play-vite)
+- [webpack](./playground/play-webpack)

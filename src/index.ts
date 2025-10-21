@@ -2,16 +2,8 @@ import type { UnpluginFactory } from 'unplugin'
 import type { Options } from './types'
 import { readFile } from 'node:fs'
 import path from 'node:path'
-import process from 'node:process'
 import { createUnplugin } from 'unplugin'
-
-function resolveServeDir(serveDir: string): string {
-  if (path.isAbsolute(serveDir)) {
-    return serveDir
-  }
-
-  return path.resolve(process.cwd(), serveDir)
-}
+import { parseMPVerifyFileRequest, resolveServeDir } from './internal/utils'
 
 export const unpluginFactory: UnpluginFactory<Options | undefined> = (options) => {
   const serveDir = resolveServeDir(options?.serveDir || 'node_modules')
@@ -21,14 +13,13 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (options) =
     vite: {
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
-          if (
-            req.originalUrl?.startsWith('/MP_')
-            && req.originalUrl.endsWith('.txt')
-          ) {
+          const file = parseMPVerifyFileRequest(req.originalUrl!)
+          if (file) {
             const filePath = path.join(
               serveDir,
-              req.originalUrl,
+              file,
             )
+
             readFile(filePath, 'utf-8', (err, data) => {
               if (err) {
                 res.statusCode = 500
@@ -55,14 +46,13 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (options) =
       if (compiler.options.devServer) {
         // Middleware handler function
         const middlewareHandler = (req: any, res: any, next: any): void => {
-          if (
-            req.url?.startsWith('/MP_')
-            && req.url.endsWith('.txt')
-          ) {
+          const file = parseMPVerifyFileRequest(req.url)
+          if (file) {
             const filePath = path.join(
               serveDir,
-              req.url,
+              file,
             )
+
             readFile(filePath, 'utf-8', (err, data) => {
               if (err) {
                 res.statusCode = 500
@@ -96,6 +86,7 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (options) =
             return setupMiddlewares ? setupMiddlewares(middlewares, devServer) : middlewares
           }
         }
+
         // Webpack 4: before hook
         else {
           const originalBefore = compiler.options.devServer.before

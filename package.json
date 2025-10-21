@@ -1,7 +1,7 @@
 {
   "name": "unplugin-mp-verify-file-serve",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "packageManager": "pnpm@10.18.3",
   "description": "",
   "license": "MIT",
@@ -45,7 +45,8 @@
     "build": "tsdown",
     "dev": "tsdown -w",
     "lint": "eslint .",
-    "play": "npm -C playground run dev",
+    "play:webpack": "npm -C playground/play-webpack run dev",
+    "play:vite": "npm -C playground/play-vite run dev",
     "prepublishOnly": "npm run build",
     "release": "bumpp && pnpm publish",
     "start": "tsx src/index.ts",

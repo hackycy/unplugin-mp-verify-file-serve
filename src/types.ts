@@ -5,11 +5,4 @@ export interface Options {
    * @default 'node_modules'
    */
   serveDir?: string
-
-  /**
-   * 微信小程序验证文件的基础路径
-   *
-   * @default '/'
-   */
-  base?: string
 }
