@@ -1,5 +1,4 @@
 {
-  "name": "play-webpack",
   "private": true,
   "scripts": {
     "dev": "nodemon -w '../../src/**/*.ts' -e .ts -x 'webpack serve --mode development --config ./webpack.config.cjs'"
