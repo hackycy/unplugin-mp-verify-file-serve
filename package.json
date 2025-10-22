@@ -1,7 +1,7 @@
 {
   "name": "unplugin-mp-verify-file-serve",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "packageManager": "pnpm@10.18.3",
   "description": "",
   "license": "MIT",
