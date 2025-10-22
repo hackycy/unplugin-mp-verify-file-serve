@@ -4,12 +4,12 @@ import process from 'node:process'
 const MP_FILE_PREFIX = 'MP_verify_'
 const MP_FILE_SUFFIX = '.txt'
 
-export function resolveServeDir(serveDir: string): string {
+export function resolveServeDir(serveDir: string, cwd = process.cwd()): string {
   if (path.isAbsolute(serveDir)) {
     return serveDir
   }
 
-  return path.resolve(process.cwd(), serveDir)
+  return path.resolve(cwd, serveDir)
 }
 
 export function parseMPVerifyFileRequest(url: string): string | null {

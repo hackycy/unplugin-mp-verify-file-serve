@@ -82,6 +82,8 @@ module.exports = {
 ```
 <br></details>
 
+> 注意在uniapp中使用时，路径需要提供绝对路径（由于uniapp的webpack context指向非项目目录）
+
 ## Example
 
 - [vite](./playground/play-vite)
