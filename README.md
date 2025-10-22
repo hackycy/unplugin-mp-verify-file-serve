@@ -26,7 +26,7 @@ export interface Options {
 ```
 
 <details>
-<summary>Vite</summary><br>
+<summary>Vite</summary>
 
 ```ts
 // vite.config.ts
@@ -38,10 +38,10 @@ export default defineConfig({
   ],
 })
 ```
-<br></details>
+</details>
 
 <details>
-<summary>Webpack</summary><br>
+<summary>Webpack</summary>
 
 ```ts
 // webpack.config.js
@@ -52,10 +52,10 @@ module.exports = {
   ]
 }
 ```
-<br></details>
+</details>
 
 <details>
-<summary>Nuxt</summary><br>
+<summary>Nuxt</summary>
 
 ```ts
 // nuxt.config.js
@@ -65,10 +65,10 @@ export default defineNuxtConfig({
   ],
 })
 ```
-<br></details>
+</details>
 
 <details>
-<summary>Vue CLI</summary><br>
+<summary>Vue CLI</summary>
 
 ```ts
 // vue.config.js
@@ -80,9 +80,9 @@ module.exports = {
   },
 }
 ```
-<br></details>
 
-> 注意在uniapp中使用时，路径需要提供绝对路径（由于uniapp的webpack context指向非项目目录）
+> 注意在uniapp(hbuilderx)项目中使用时，由于uniapp的webpack context指向非项目目录，路径需要提供绝对路径
+</details>
 
 ## Example
 
