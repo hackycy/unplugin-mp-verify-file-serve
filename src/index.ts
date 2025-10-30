@@ -44,10 +44,6 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
         ctx.setRoot(compiler.options.context)
       }
 
-      compiler.hooks.beforeRun.tap('unplugin-mp-verify-file-serve', () => {
-        // Webpack production build mode - no dev server
-      })
-
       // Setup devServer middleware for development mode
       if (compiler.options.devServer) {
         // Middleware handler function
