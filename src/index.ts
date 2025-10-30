@@ -1,25 +1,25 @@
 import type { UnpluginFactory } from 'unplugin'
 import type { Options } from './types'
 import { readFile } from 'node:fs'
-import path from 'node:path'
 import { createUnplugin } from 'unplugin'
-import { parseMPVerifyFileRequest, resolveServeDir } from './internal/utils'
+import { Context } from './core/context'
 
 export const unpluginFactory: UnpluginFactory<Options | undefined> = (
-  options,
+  options = {},
 ) => {
-  const serveDir = options?.serveDir || 'node_modules'
+  const ctx = new Context(options)
 
   return {
     name: 'unplugin-mp-verify-file-serve',
     vite: {
+      configResolved(config) {
+        ctx.setRoot(config.root)
+      },
       configureServer(server) {
-        const viteServeDir = resolveServeDir(serveDir, server.config.root)
-
         server.middlewares.use((req, res, next) => {
-          const file = parseMPVerifyFileRequest(req.originalUrl!)
+          const file = ctx.parseMPVerifyFileRequest(req.originalUrl!)
           if (file) {
-            const filePath = path.join(viteServeDir, file)
+            const filePath = ctx.resolveFilePath(file)
 
             readFile(filePath, 'utf-8', (err, data) => {
               if (err) {
@@ -40,10 +40,9 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
     },
     webpack(compiler) {
       // 获取 webpack 的工作目录（项目根目录）
-      const webpackServeDir = resolveServeDir(
-        serveDir,
-        compiler.options.context,
-      )
+      if (compiler.options.context) {
+        ctx.setRoot(compiler.options.context)
+      }
 
       compiler.hooks.beforeRun.tap('unplugin-mp-verify-file-serve', () => {
         // Webpack production build mode - no dev server
@@ -53,9 +52,9 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (
       if (compiler.options.devServer) {
         // Middleware handler function
         const middlewareHandler = (req: any, res: any, next: any): void => {
-          const file = parseMPVerifyFileRequest(req.url)
+          const file = ctx.parseMPVerifyFileRequest(req.url)
           if (file) {
-            const filePath = path.join(webpackServeDir, file)
+            const filePath = ctx.resolveFilePath(file)
 
             readFile(filePath, 'utf-8', (err, data) => {
               if (err) {

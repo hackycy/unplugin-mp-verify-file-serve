@@ -7,6 +7,7 @@ export default defineConfig({
     Inspect(),
     Unplugin({
       serveDir: 'node_modules',
+      serveFiles: ['test.txt'],
     }),
   ],
 })
