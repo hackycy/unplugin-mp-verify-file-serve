@@ -55,19 +55,6 @@ module.exports = {
 </details>
 
 <details>
-<summary>Nuxt</summary>
-
-```ts
-// nuxt.config.js
-export default defineNuxtConfig({
-  modules: [
-    ['unplugin-mp-verify-file-serve/nuxt', { /* options */ }],
-  ],
-})
-```
-</details>
-
-<details>
 <summary>Vue CLI</summary>
 
 ```ts
